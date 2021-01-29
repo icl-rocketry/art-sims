@@ -6,5 +6,10 @@
 clear
 clc
 
-%Initialisation of variables
-[q_dot,~] = NoseconeTipTemp
+%%Calculating stagnation heating
+
+[q_dot0,T_w0] = NoseconeTipTemp;
+
+%%Calculating flat-plate heating
+
+
