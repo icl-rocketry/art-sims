@@ -24,18 +24,17 @@ i = 0; %Starting index value
 rho = interp1([1500,2000],[1.058,1.007],Alt); %Air density calculation
 const1 = (1.83*10^-8) / sqrt(r_n); %Constant used in loop
 const2 = (((rho^N) * (V^M)) / (epsilon * sigma)); %Constant used in loop 
-C1 = 1.83*10^-8 / sqrt(r_n); %Initialising C
+C(1)= 1.83*10^-8 / sqrt(r_n); %Initialising C
 
 while tol > 1E-1
-  C2 = ((((-C1/const1)+1)*T_0)^4)/const2; %Equation to find C
-  tol = abs(((const2*C2)^0.25)-((const2*C1)^0.25)) %Finding Tolerance
-  C1 = C2; %Updating value
+  C(i+2) = ((((-C(i+1)/const1)+1)*T_0)^4)/const2; %Equation to find C
+  tol = abs(((const2*C(i+2))^0.25)-((const2*C(i+1))^0.25)) %Finding Tolerance
   i = i + 1; %Logging iteration number
 end
 
-T_w = (const2 .* C2)^0.25;
+T_w = (const2 .* C(length(C)))^0.25;
 %%Printing results
 
-disp('Equilibrium temperature at convergence:'),disp(num2str(T_w(end))),disp('K')
+disp('Equilibrium temperature at convergence:'),disp(num2str(T_w)),disp('K')
 disp('Iteration number'),disp(num2str(i));
 end
