@@ -5,10 +5,6 @@ program TipHeating
     !Based on MATLAB script by Ishaan Aldina (2021)
     !Nathanael Jenkins (2021)
     !-----------------------------------------------
-    !WARNING!
-    !DO NOT USE!
-    !This code has not been verified, and fails completely below Mach 1. The iterative method needs investigation and validation.
-    !-----------------------------------------------
 
     implicit none
     !USER DEFINED VARIABLES
@@ -20,7 +16,7 @@ program TipHeating
     !OTHER VARIABLES
     !Tw=> final temperature; to=> max' stagnation temperature
     !N, Z => useufl constants (see below); C1, C2 => variable constants; i => iteration counter
-    double precision :: Tw, to, N, Z, C1=0, C2, tol=1.0
+    double precision :: Tw, to, N, Z, C1=0.001, C2, tol=1.0
     !qo => heat transfer max; qfp => flat plate heat transfer; qle => leading edge heat transfer; Tle => leading edge heat
     double precision :: qo, qfp, qle, Tle1, Tle2
     !Date and time variables for diaplay
@@ -54,7 +50,8 @@ program TipHeating
 
     !Calculates maximum stagnation temperature
     to=((1+(0.2*(Ma**2)))*274.375)
-
+    
+    ! ------------ NOSE CALCULATIONS --------------
     !Calculate useful constants N and Z
     !These will be used in every iteration, but only need calculating once, reducing computation time
     N = (((rn/1000)**(-0.5))*((1.83)*10.0**(-8)))
@@ -63,9 +60,9 @@ program TipHeating
     !Iterate until change in temperature for each iteration is less than 10^-12
     do while (tol > 10.0**(-12))
         !Computes a new value for constant C
-        C2 = ((((-C1/N)+1)*to)**4)/Z
+        C2 = (((1-C1/N)*to)**4)/Z
         !Calculates tolerance based on change in estimated temperature over each iteration
-        tol = abs(((Z*C2)**0.25)-((Z*C1)**0.25))
+        tol = abs(C2-C1)
         !Re-assigns calculated value of C to 'old' value
         C1 = C2
         !Increase iteration count by 1
@@ -75,9 +72,10 @@ program TipHeating
     !Calculate final temperature
     Tw = ((Z*C1)**0.25)
 
+    ! ------------ FIN CALCULATIONS --------------
     !Calculate min estimated leading edge heating
     qo = C1*(rho**0.5)*(V**3)
-    !Calculates constant C (explicit)
+    !Calculates constant C (explicitly)
     C1 = 2.53*(10.0**(-9))*((cosd(phi1))**(0.5))*(sind(phi1))*(X**(-0.5))*(1-(Tw/to))
     !Calculates corresponding heat transfer for a flat plate
     qfp = C1*(rho**(0.5))*(V**(3.2))
@@ -92,7 +90,7 @@ program TipHeating
     qle = sqrt((0.5*(qo**2)*((cosd(delta))**2))+((qfp**2)*((sind(delta))**2)))
     Tle2 = (qle/(e*((5.67)*(10.0**(-12)))))**0.25
 
-    !Output data
+    ! ------------ DATA OUTPUT --------------
     call fdate(date)
     print '(/, a54)', '           --ROCKET HEATING CALCULATOR--               '
     print '(a51)', '----------------------------------------------------------------'
