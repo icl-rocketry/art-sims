@@ -10,13 +10,13 @@ clear
 clc
 
 %%Initialisation of values
-M = 3; %Constant for velocity
-N = 0.5; %Constant for density
+M = 1; %Constant for velocity
+N = 1.16; %Constant for density
 tol = 1; %Initialising tolerance
 epsilon = 0.92; %Assuming common 3D printing material 
 sigma = 5.67*10^-12; %Stefan-Boltzmann Constant (W m^-2 K^-4)
-Ma = 1.15; %Max velocity Mach number
-V = 390; %Max velocity actual speed (m/s)
+Ma = 0.28; %Max velocity Mach number
+V = 87.7; %Max velocity actual speed (m/s)
 T_0 = (1 + (0.2 * Ma*Ma)) * 274.375; %Max velocity stagnation temperature
 r_n = 23 / 1000; %Body Nose Radius (m)
 Alt = 1950; %m : Max velocity altitude
