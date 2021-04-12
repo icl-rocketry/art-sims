@@ -20,4 +20,4 @@ Generates:
 ### Issues
 Still under development, there are currently no plot legends.
 Stability calculations have not been verified, as OpenRocket uses a different method to calculate stability in simulations; be wary of under-predictions.
-Headting calculations have not been verified, and may perform poorly in low-mach flight.
+Heating calculations have not been verified, and may perform poorly in low-mach flight.
