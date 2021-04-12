@@ -9,4 +9,4 @@ Various heating calculation scripts.
 
 ## Tip Heating Calculations
 
-![https://github.com/icl-art/Aero-Sims/blob/main/Heating/Calculations.jpg?raw=true]
+! [Calculations]https://github.com/icl-art/Aero-Sims/blob/main/Heating/Calculations.jpg?raw=true
