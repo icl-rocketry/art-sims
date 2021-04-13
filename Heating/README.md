@@ -1,15 +1,13 @@
 
 # Body heating calculations
 
-Various heating calculation scripts.
+Various heating calculation scripts. An analytical solution is currently under development
 
-**These have not been verified. Approach with caution**
-
-**Current scripts do not correctly calculate equlibrium temperatures**
+**Do not use iterative scripts**
 
 ## Tip Heating Calculations
 
 ![Calculations](./Calculations.jpg)
 
-Using equations 1, 2, 3, and 4 (which can be found in the ICLR heating calculations wiki page), an iterative equation (6) can be developed to solve for constant C, which can the be substituted back into equation 4 to find the equlibrium wall temperature.
+Using equations 1, 2, 3, and 4 (which can be found in the ICLR heating calculations wiki page), an iterative equation (5) can be developed to solve for equlibrium wall temperature.
 This applies to any flow, although **these calculations have not yet been verified**

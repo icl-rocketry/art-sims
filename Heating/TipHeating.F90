@@ -16,7 +16,7 @@ program TipHeating
     !OTHER VARIABLES
     !Tw=> final temperature; to=> max' stagnation temperature
     !N, Z => useufl constants (see below); C1, C2 => variable constants; i => iteration counter
-    double precision :: Tw, to, N, Z, C1=0.001, C2, tol=1.0
+    double precision :: Tw, to, N, Z, C1=0.00000000000001, C2, tol=1.0, Tw1, Tw2
     !qo => heat transfer max; qfp => flat plate heat transfer; qle => leading edge heat transfer; Tle => leading edge heat
     double precision :: qo, qfp, qle, Tle1, Tle2
     !Date and time variables for diaplay
@@ -49,7 +49,7 @@ program TipHeating
     end if
 
     !Calculates maximum stagnation temperature
-    to=((1+(0.2*(Ma**2)))*274.375)
+    to=((1+(0.2*(Ma**2)))*288.15)
     
     ! ------------ NOSE CALCULATIONS --------------
     !Calculate useful constants N and Z
@@ -107,5 +107,21 @@ program TipHeating
     !print '(a32, f7.3, a2)', '          Max Fin  Temperature: ', Tle2, ' k'
     print '(a32, f7.3, a4)', '          Max Fin Temperature: ', (Tle2-273.15), ' ºc'
     print '(a51, /)', '----------------------------------------------------------------'
+
+    tol = 1.0
+    Tw1=to
+    !Iterate until change in temperature for each iteration is less than 10^-12
+    do while (tol > 10.0**(-12))
+        !Computes a new value for constant C
+        Tw2 = to*(1-(Tw1**4)/(N*Z))
+        !Calculates tolerance based on change in estimated temperature over each iteration
+        tol = abs(Tw2-Tw1)
+        !Re-assigns calculated value of C to 'old' value
+        Tw1=Tw2
+        !Increase iteration count by 1
+        i = i+1
+    end do
+    print *, Tw1
+    print *, (Tw1-273.15)
 
 end program Tipheating
