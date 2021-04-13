@@ -10,4 +10,4 @@ Various heating calculation scripts. An analytical solution is currently under d
 ![Calculations](./Calculations.jpg)
 
 Using equations 1, 2, 3, and 4 (which can be found in the ICLR heating calculations wiki page), an iterative equation (5) can be developed to solve for equlibrium wall temperature.
-This applies to any flow, although **these calculations have not yet been verified**
+This applies to any flow, although **these calculations are not up to date**
