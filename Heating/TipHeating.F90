@@ -14,9 +14,9 @@ program TipHeating
     !delta => leading edge sweep; X => nose tip-fins length; phi => local body angle (small impact)
     double precision :: delta=30.252, X=0.777, phi1=0, phi2 = 89.99
     !OTHER VARIABLES
-    !Tw=> final temperature; to=> max' stagnation temperature
+    !Tw=> final temperature; T_0=> max' stagnation temperature
     !N, Z => useufl constants (see below); C1, C2 => variable constants; i => iteration counter
-    double precision :: Tw, to, N, Z, C1=0.00000000000001, C2, tol=1.0, Tw1, Tw2
+    double precision :: Tw, T_0, N, Z, C1=0.00000000000001, C2, tol=1.0, Tw1, Tw2
     !qo => heat transfer max; qfp => flat plate heat transfer; qle => leading edge heat transfer; Tle => leading edge heat
     double precision :: qo, qfp, qle, Tle1, Tle2
     !Date and time variables for diaplay
@@ -49,7 +49,7 @@ program TipHeating
         Ma = 1.1232
     end if
     !Calculates maximum stagnation temperature
-    to=((1+(0.2*(Ma**2)))*288.15)
+    T_0=((1+(0.2*(Ma**2)))*288.15)
     
 
 
@@ -62,7 +62,7 @@ program TipHeating
     !Iterate until change in temperature for each iteration is less than 10^-12
     do while (tol > 10.0**(-12))
         !Computes a new value for constant C
-        C2 = (((1-C1/N)*to)**4)/Z
+        C2 = (((1-C1/N)*T_0)**4)/Z
         !Calculates tolerance based on change in estimated temperature over each iteration
         tol = abs(C2-C1)
         !Re-assigns calculated value of C to 'old' value
@@ -78,15 +78,15 @@ program TipHeating
     !Calculate min estimated leading edge heating
     qo = C1*(rho**0.5)*(V**3)
     !Calculates constant C (explicitly)
-    C1 = 2.53*(10.0**(-9))*((cosd(phi1))**(0.5))*(sind(phi1))*(X**(-0.5))*(1-(Tw/to))
+    C1 = 2.53*(10.0**(-9))*((cosd(phi1))**(0.5))*(sind(phi1))*(X**(-0.5))*(1-(Tw/T_0))
     !Calculates corresponding heat transfer for a flat plate
     qfp = C1*(rho**(0.5))*(V**(3.2))
-    !Calculates heat transfer to leading edge
+    !Calculates heat transfer T_0 leading edge
     qle = sqrt((0.5*(qo**2)*((cosd(delta))**2))+((qfp**2)*((sind(delta))**2)))
     !Calculates temperature based on heat transfers
     Tle1 = (qle/(e*((5.67)*(10.0**(-12)))))**0.25
     !Calculate max estimated leading edge heating (repeats above process)
-    C1 = 2.53*(10.0**(-9))*((cosd(phi2))**(0.5))*(sind(phi2))*(X**(-0.5))*(1-(Tw/to))
+    C1 = 2.53*(10.0**(-9))*((cosd(phi2))**(0.5))*(sind(phi2))*(X**(-0.5))*(1-(Tw/T_0))
     qfp = C1*(rho**(0.5))*(V**(3.2))
     qle = sqrt((0.5*(qo**2)*((cosd(delta))**2))+((qfp**2)*((sind(delta))**2)))
     Tle2 = (qle/(e*((5.67)*(10.0**(-12)))))**0.25
@@ -94,14 +94,14 @@ program TipHeating
 
     ! ------------ DATA OUTPUT --------------
     call fdate(date)
-    print '(/, a54)', '           --ROCKET HEATING CALCULATOR--               '
+    print '(/, a54)', '           --ROCKET HEATING CALCULAT_0R--               '
     print '(a51)', '----------------------------------------------------------------'
     print '(a3, f3.1, a6, f5.1, a6, f4.1, a8, f5.3, a6, f5.2)', 'M: ', Ma, ' | V: ', V, ' | R: ', rn, ' | rho: ', rho, ' | e: ', e
     print '(a51)', '----------------------------------------------------------------'
     print '(a32, i3)', '                   Iterations: ', i
-    print '(a33, e11.5, a2)', '                     Tolerance:  ±', tol, ' k'
-    !rint '(a32, f7.3, a2)', 'Maximum stagnation temperature: ', to, ' k'
-    print '(a32, f7.3, a4)', 'Maximum stagnation temperature: ', (to-273.15), ' ºc'
+    print '(a33, e11.5, a2)', '                     tolerance:  ±', tol, ' k'
+    !rint '(a32, f7.3, a2)', 'Maximum stagnation temperature: ', T_0, ' k'
+    print '(a32, f7.3, a4)', 'Maximum stagnation temperature: ', (T_0-273.15), ' ºc'
     !print '(a32, f7.3, a2)', '             Nose  Temperature: ', Tw, ' k'
     print '(a32, f7.3, a4)', '             Nose Temperature: ', (Tw-273.15), ' ºc'
     !print '(a32, f7.3, a2)', '          Min Fin  Temperature: ', Tle1, ' k'
@@ -110,22 +110,6 @@ program TipHeating
     print '(a32, f7.3, a4)', '          Max Fin Temperature: ', (Tle2-273.15), ' ºc'
     print '(a51, /)', '----------------------------------------------------------------'
 
-    tol = 1.0
-    Tw1=to
-    !Iterate until change in temperature for each iteration is less than 10^-12
-    do while (tol > 10.0**(-12))
-        !Computes a new value for constant C
-        Tw2 = to*(1-(Tw1**4)/(N*Z))
-        !Calculates tolerance based on change in estimated temperature over each iteration
-        tol = abs(Tw2-Tw1)
-        !Re-assigns calculated value of C to 'old' value
-        Tw1=Tw2
-        !Increase iteration count by 1
-        i = i+1
-    end do
-    print *, Tw1
-    print *, (Tw1-273.15)
-
 
     ! ------------ NOSE CALCULATIONS || DIRECT --------------
     !Calculate useful constants N and Z
@@ -133,36 +117,55 @@ program TipHeating
     N = (((rn/1000)**(-0.5))*((1.83)*10.0**(-8)))
     Z = (((rho**0.5)*(V**3))/((e)*((5.67)*10.0**(-12))))
     ! Initialises variables
-    Tw1=to
+    Tw1=T_0+25
     tol = 1.0
+    N = N*Z
+    Z = N/T_0
     !Iterate until change in temperature for each iteration is less than 10^-12
     do while (tol > 10.0**(-12))
-        !Computes a new value for constant C
-        Tw2 = to*(1-(Tw1**4)/(N*Z))
-        !Calculates tolerance based on change in estimated temperature over each iteration
+        !Computes a new value for Tw
+        ! Tw2 = T_0*(1-(Tw1**4)/(N*Z))          ! FPM
+        ! Tw2 = sqrt(sqrt((N*Z*(1-Tw1/T_0))))   ! FPM
+        Tw2 = Tw1 - (Tw1**4+Z*Tw1-N)/(4*Tw1**3 + Z)
+        !Calculates Tolerance based on change in estimated temperature over each iteration
         tol = abs(Tw2-Tw1)
-        !Re-assigns calculated value of C to 'old' value
+        !Re-assigns calculated value of Tw to 'old' value
         Tw1=Tw2
         !Increase iteration count by 1
         i = i+1
     end do
     Tw = Tw1
+    C1 = (Tw**4)/Z
 
 
-    ! ------------ FIN CALCULATIONS || DIRECT? --------------
-    ! UNDER REVIEW
+    ! ------------ FIN CALCULATIONS || C-BASED --------------
+    !Calculate min estimated leading edge heating
+    qo = C1*(rho**0.5)*(V**3)
+    !Calculates constant C (explicitly)
+    C1 = 2.53*(10.0**(-9))*((cosd(phi1))**(0.5))*(sind(phi1))*(X**(-0.5))*(1-(Tw/T_0))
+    !Calculates corresponding heat transfer for a flat plate
+    qfp = C1*(rho**(0.5))*(V**(3.2))
+    !Calculates heat transfer T_0 leading edge
+    qle = sqrt((0.5*(qo**2)*((cosd(delta))**2))+((qfp**2)*((sind(delta))**2)))
+    !Calculates temperature based on heat transfers
+    Tle1 = (qle/(e*((5.67)*(10.0**(-12)))))**0.25
+    !Calculate max estimated leading edge heating (repeats above process)
+    C1 = 2.53*(10.0**(-9))*((cosd(phi2))**(0.5))*(sind(phi2))*(X**(-0.5))*(1-(Tw/T_0))
+    qfp = C1*(rho**(0.5))*(V**(3.2))
+    qle = sqrt((0.5*(qo**2)*((cosd(delta))**2))+((qfp**2)*((sind(delta))**2)))
+    Tle2 = (qle/(e*((5.67)*(10.0**(-12)))))**0.25
 
 
     ! ------------ DATA OUTPUT --------------
     call fdate(date)
-    print '(/, a54)', '  --ROCKET HEATING CALCULATOR || DIRECT METHOD--      '
+    print '(/, a54)', '  --ROCKET HEATING CALCULAT_0R || DIRECT METHOD--      '
     print '(a51)', '----------------------------------------------------------------'
     print '(a3, f3.1, a6, f5.1, a6, f4.1, a8, f5.3, a6, f5.2)', 'M: ', Ma, ' | V: ', V, ' | R: ', rn, ' | rho: ', rho, ' | e: ', e
     print '(a51)', '----------------------------------------------------------------'
     print '(a32, i3)', '                   Iterations: ', i
-    print '(a33, e11.5, a2)', '                     Tolerance:  ±', tol, ' k'
-    !rint '(a32, f7.3, a2)', 'Maximum stagnation temperature: ', to, ' k'
-    print '(a32, f7.3, a4)', 'Maximum stagnation temperature: ', (to-273.15), ' ºc'
+    print '(a33, e11.5, a2)', '                     tolerance:  ±', tol, ' k'
+    !rint '(a32, f7.3, a2)', 'Maximum stagnation temperature: ', T_0, ' k'
+    print '(a32, f7.3, a4)', 'Maximum stagnation temperature: ', (T_0-273.15), ' ºc'
     !print '(a32, f7.3, a2)', '             Nose  Temperature: ', Tw, ' k'
     print '(a32, f7.3, a4)', '             Nose Temperature: ', (Tw-273.15), ' ºc'
     !print '(a32, f7.3, a2)', '          Min Fin  Temperature: ', Tle1, ' k'
