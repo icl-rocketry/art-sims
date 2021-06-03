@@ -64,15 +64,15 @@ program TipHeating
     Z = N/T_0
     !Iterate until change in temperature for each iteration is less than 10^-12
     do while (tol > 10.0**(-12))
-<<<<<<< HEAD
+
         !Computes a new value for Tw
         Tw2 = T_0*(1-(Tw1**4)/(N*Z))          ! FPM
         ! Tw2 = sqrt(sqrt((N*Z*(1-Tw1/T_0))))   ! FPM
         !Tw2 = Tw1 - (Tw1**4+Z*Tw1-N)/(4*Tw1**3 + Z)
-=======
+
         !Computes a new value for Tw (fixed point method)
         Tw2 = (N*Z - Tw1**4)/(N*Z/T_0)
->>>>>>> 5654b89f65d867d52b822ed2dd12a58ea738519c
+
         !Calculates Tolerance based on change in estimated temperature over each iteration
         tol = abs(Tw2-Tw1)
         !Re-assigns calculated value of Tw to 'old' value
@@ -115,11 +115,9 @@ program TipHeating
     print '(a32, f7.3, a4)', 'Maximum stagnation temperature: ', (T_0-273.15), ' ºc'
     !print '(a32, f7.3, a2)', '             Nose  Temperature: ', Tw, ' k'
     print '(a32, f7.3, a4)', '             Nose Temperature: ', (Tw-273.15), ' ºc'
-    !print '(a32, f7.3, a2)', '          Min Fin  Temperature: ', Tle1, ' k'
+!    !print '(a32, f7.3, a2)', '          Min Fin  Temperature: ', Tle1, ' k'
     print '(a32, f7.3, a4)', '          Min Fin Temperature: ', (Tle1-273.15), ' ºc'
-    !print '(a32, f7.3, a2)', '          Max Fin  Temperature: ', Tle2, ' k'
+!    !print '(a32, f7.3, a2)', '          Max Fin  Temperature: ', Tle2, ' k'
     print '(a32, f7.3, a4)', '          Max Fin Temperature: ', (Tle2-273.15), ' ºc'
-    print *, N
-    print *, Z
 
 end program Tipheating
