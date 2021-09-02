@@ -1,0 +1,74 @@
+Nathanael Jenkins 2021
+
+Avoid changing conditions not listed here
+
+%-------SOLVER SETTINGS------%
+LINE 22 - Turbulence model (SST recommended)
+LINE 81 -> 93 - Steady/ unsteady iteration limits
+LINE 96 - Convergence field
+LINE 99 - Minimum residual value for CONV_FIELD
+LINE 102 - Iteration to start convergence monitor
+LINE 106 -> 109 - Cauchy convergence used IF CONV_FIELD is a coefficeint
+LINE 120 -> 129 - Window convergence used for unsteady state simulations (see documentation)
+LINE 140 - Enables unsteady state simulation
+LINE 145 -> 162 - UNSTEADY STATE options (see documentation)
+
+%-------PHYSICAL SETTINGS------%
+LINE 182 - Mach number
+LINE 197 - Freestream specification
+LINE 200 - Freestream pressure
+LINE 204 - Freestream temperature
+LINE 210 - Reynolds number
+LINE 213 - Characteristic length
+LINE 217 - Freestream density (If SREESTREAM_OPTION = DENSITY_FS)
+LINE 220 - Freestream velocity (components)
+LINE 227 - Freestream turbulence intensity
+LINE 230 - Freestream turb2lam visc ratio
+LINE 235 - Freestream P_ref specification
+LINE 337 - Moment origin (Body CG)
+LINE 342 - Reference length (2)
+LINE 346 - Reference area
+LINE 358 - Fluid model
+
+%-----BOUNDARIES-----%
+LINE 826 - No-slip isothermal wall
+LINE 829 - Farfield
+LINE 843 - Inlet type
+LINE 864 - Inlet specification
+LINE 870 - Outlet
+LINE 895 - Supersonic inlet
+LINE 898 - Supersonic outlet
+LINE 995 - Wall roughness
+
+%-----SURFACES-----%
+LINE 1004 - Output boundaries
+LINE 1007 - Coefficeint evaluation boundaries
+LINE 1013 - Wall function specification
+
+%-----NUMERICAL PARAMETERS-----%
+LINE 1033 - Spatial gradients
+LINE 1040 - CFL Number
+LINE 1043 - Adaptive CFL specification
+LINE 1051 - Adaptive CFL parameters
+LINE 1054 - Max delta-time in UNSTEADY STATE
+LINE 1076 -> 1140 - MUSCL specification
+LINE 1149 - Linear solver specification
+LINE 1164 - Implicit linear solver iteration limit
+LINE 1237 - Time discretisation
+LINE 1299 - Turbulence differencing
+LINE 1313 - Thermal diffusivity
+
+%-----I/O-----%
+LINE 1661 - Screen output
+LINE 1664 - History output
+LINE 1667 - Volume output
+LINE 1670 -> 1674 - Screen write frequency
+LINE 1677 -> 1681 - History write frequency
+LINE 1692 - Mesh filename
+LINE 1695 - Mesh format
+LINE 1701 - Solution filename
+LINE 1707 - Output format
+LINE 1714 - Output files
+LINE 1720 - Forces filename
+LINE 1729 - Volume filename
+LINE 1741 - Surface filename
