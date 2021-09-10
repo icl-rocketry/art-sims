@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toolset id="apps_toolset" template="true">
+   <tool id="favorites" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="code_verify_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="simulation_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="internal" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="learning_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group">
+      <child_tool id="ml_classification_2" toolset_id="mlearnapp_toolset"/>
+      <child_tool id="ml_regression_2" toolset_id="mlearnapp_toolset"/>
+   </tool>
+   <tool id="my_apps" quick_access_eligible="false" toolset_id="apps_toolset" type="group">
+      <child_tool id="cbe248d3-61a1-473f-830b-fd7d9584a56d" toolset_id="user_apps_toolset"/>
+   </tool>
+   <tool id="control_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="signal_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="verification_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="automotive_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="deployment_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="finance_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="image_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group">
+      <child_tool id="mapview" toolset_id="map_toolset"/>
+   </tool>
+   <tool id="test_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group">
+      <child_tool id="raspiMonitorApp" toolset_id="hwspkg_toolset"/>
+   </tool>
+   <tool id="math_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group">
+      <child_tool id="dfittool" toolset_id="stats_toolset"/>
+   </tool>
+   <tool id="code_gen_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="database_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="biology_products" quick_access_eligible="false" toolset_id="apps_toolset" type="group"/>
+   <tool id="apps" quick_access_eligible="false" toolset_id="apps_toolset" type="gallery">
+      <child_tool id="favorites" toolset_id="apps_toolset"/>
+      <child_tool id="my_apps" toolset_id="apps_toolset"/>
+      <child_tool id="learning_products" toolset_id="apps_toolset"/>
+      <child_tool id="math_products" toolset_id="apps_toolset"/>
+      <child_tool id="control_products" toolset_id="apps_toolset"/>
+      <child_tool id="automotive_products" toolset_id="apps_toolset"/>
+      <child_tool id="signal_products" toolset_id="apps_toolset"/>
+      <child_tool id="image_products" toolset_id="apps_toolset"/>
+      <child_tool id="test_products" toolset_id="apps_toolset"/>
+      <child_tool id="finance_products" toolset_id="apps_toolset"/>
+      <child_tool id="biology_products" toolset_id="apps_toolset"/>
+      <child_tool id="code_gen_products" toolset_id="apps_toolset"/>
+      <child_tool id="code_verify_products" toolset_id="apps_toolset"/>
+      <child_tool id="deployment_products" toolset_id="apps_toolset"/>
+      <child_tool id="database_products" toolset_id="apps_toolset"/>
+      <child_tool id="verification_products" toolset_id="apps_toolset"/>
+      <child_tool id="simulation_products" toolset_id="apps_toolset"/>
+      <child_tool id="internal" toolset_id="apps_toolset"/>
+   </tool>
+   <toolset id="hwspkg_toolset" template="true">
+      <tool id="raspiMonitorApp" toolset_id="hwspkg_toolset"/>
+   </toolset>
+   <toolset id="user_apps_toolset" template="true">
+      <tool id="cbe248d3-61a1-473f-830b-fd7d9584a56d" toolset_id="user_apps_toolset"/>
+   </toolset>
+   <toolset id="map_toolset" template="true">
+      <tool id="mapview" toolset_id="map_toolset"/>
+   </toolset>
+   <toolset id="stats_toolset" template="true">
+      <tool id="dfittool" toolset_id="stats_toolset"/>
+   </toolset>
+   <toolset id="mlearnapp_toolset" template="true">
+      <tool id="ml_regression_2" toolset_id="mlearnapp_toolset"/>
+      <tool id="ml_classification_2" toolset_id="mlearnapp_toolset"/>
+   </toolset>
+</toolset>

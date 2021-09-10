@@ -18,6 +18,8 @@ Generates:
 - Stability graphic over motor burn
 - Data summary
 
+'FlightEvents' app can be used during flights to estimate activity. Uses data from live script - remember to load data before launch
+
 ### Issues
 Still under development, there are currently no plot legends.
 Stability calculations have not been verified, as OpenRocket uses a different method to calculate stability in simulations; be wary of under-predictions.
