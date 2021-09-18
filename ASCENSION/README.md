@@ -1,6 +1,6 @@
 
 # ASCENSION
-She's new, she's sleek, she's unstable... it's ASCENSION!
+ART's thicccest rocket yet...
 All ASCENSION specific files to be stored here.
 
 ## Contents
