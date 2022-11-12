@@ -37,7 +37,7 @@ class ApogeeDriftList(list):
 
         with orhelper.OpenRocketInstance() as instance:
             orh = orhelper.Helper(instance) # Creating a new orhelper instance.
-            doc = orh.load_doc(os.path.abspath('C:/Users/ishaa/Documents/GitHub/art-designs/APEX.ork')) #Opening the OpenRocket folder (USE OWN FILE NAME)
+            doc = orh.load_doc(os.path.abspath('FILEPATH')) #Loading the desired OpenRocket simulation, USE DESIRED FILEPATH to the actual OpenRocket file - likely in GitHub folders of some variety.
             sim = doc.getSimulation(7) # Get the simulation as necessary, 0 for first simulation in OpenRocket list of save simulations.
 
             opts = sim.getOptions() #Getting the simulation parameters.
@@ -140,7 +140,7 @@ class StabilitiesList(list):
 
         with orhelper.OpenRocketInstance() as instance:
             orh = orhelper.Helper(instance) #Creating a new orhelper instance.
-            doc = orh.load_doc(os.path.abspath('C:/Users/ishaa/Documents/GitHub/art-designs/APEX.ork')) #Loading the desired OpenRocket simulation, USE DESIRED FILEPATH.
+            doc = orh.load_doc(os.path.abspath('FILEPATH')) #Loading the desired OpenRocket simulation, USE DESIRED FILEPATH to the actual OpenRocket file - likely in GitHub folders of some variety.
             sim = doc.getSimulation(7) #Choosing the simulation as saved in the OpenRocket file.
 
             opts = sim.getOptions() #Getting the simulation parameters.
@@ -233,6 +233,8 @@ def apogeedriftMC(numberofsims):
 
 def stabilityMC(numberofsims):
     vals = StabilitiesList()
+
+
     f = open('StabMonteCarlo.txt','w')
     f.write('Wind Speed          ')
     f.write('Wind Direction          ')
